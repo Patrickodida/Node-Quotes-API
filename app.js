@@ -1,11 +1,14 @@
 // Import Libraries
 const express = require('express');
 const fs = require('node:fs');
+const authorRouter = require('./Routes/authorsRoutes');
 
 const app = express();
 
 // Middleware
 app.use(express.json());
+
+app.use("/authors", authorRouter);
 
 // Set request handlers based on the API endpoints
 app.get("/", (req, res)=>{
