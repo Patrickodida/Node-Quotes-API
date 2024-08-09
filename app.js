@@ -2,6 +2,7 @@
 const express = require('express');
 const fs = require('node:fs');
 const authorRouter = require('./Routes/authorsRoutes');
+const quoteRouter = require('./Routes/quotesRoutes');
 
 const app = express();
 
@@ -9,6 +10,8 @@ const app = express();
 app.use(express.json());
 
 app.use("/authors", authorRouter);
+
+app.use("/quotes", quoteRouter);
 
 // Set request handlers based on the API endpoints
 app.get("/", (req, res)=>{
