@@ -10,5 +10,8 @@ router.get("/", authorsController.getAllAuthors);
 // Post New Authors
 router.post("/", authorsController.createNewAuthors);
 
+// Get Author by ID
+router.get("/:id", authorsController.getAuthorById);
+
 // Export Router
 module.exports = router;
