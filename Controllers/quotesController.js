@@ -32,8 +32,32 @@ const createNewQuotes = (req, res)=>{
     })
 }
 
+// Create a function to retrieve a specific quote by ID
+const getQuoteById = (req, res)=>{
+  const { id } = req.params;
+  //const id = parseInt(req.params.id);
+  fs.readFile("./Models/quotes.json", "utf8", (err, data)=>{
+    if(err){
+      res.send("Failed to get data")
+    } else {
+      const quotes = JSON.parse(data);
+      const quote = quotes.find(q => q.id == id);
+      if(quote){
+        res.json(quote)
+      } else {
+        res.send("Quote not found")
+      }
+    }
+  })
+}
+
+// Create a function to update an existing quote by ID
+
+// Create a function to delete a quote by ID
+
 // Export All Function
 module.exports = {
     getAllQuotes,
-    createNewQuotes
+    createNewQuotes,
+    getQuoteById
 }

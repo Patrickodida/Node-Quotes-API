@@ -19,7 +19,7 @@ app.get("/", (req, res)=>{
 });
 
 // Set the server to listen on port 5000
-const PORT = 5000;
+const PORT = 3000;
 app.listen(PORT, ()=>{
     console.log(`Server is listening on http://localhost:${PORT}`)
 });

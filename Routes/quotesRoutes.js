@@ -10,5 +10,8 @@ router.get("/", quotesController.getAllQuotes);
 // Post New Quotes
 router.post("/", quotesController.createNewQuotes);
 
+// Get Quote by ID
+router.get("/:id", quotesController.getQuoteById);
+
 // Export Router
 module.exports = router;
