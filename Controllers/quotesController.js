@@ -76,12 +76,38 @@ const updateQuoteId = (req, res)=>{
     }
   })
 }
+
 // Create a function to delete a quote by ID
+const deleteQuoteById = (req, res)=>{
+  const { id } = req.params;
+  fs.readFile("./Models/quotes.json", "utf8", (err, data)=>{
+    if(err){
+      res.send("Failed to get data")
+    } else {
+      let quotes = JSON.parse(data);
+      const quoteIndex = quotes.findIndex(q => q.id == id);
+      if(quoteIndex !== -1){
+        quotes = quotes.filter(q => q.id != id)
+        // Write updated data to the file
+        fs.writeFile("./Models/quotes.json", JSON.stringify(quotes, null, 2), (err)=>{
+          if(err){
+            res.send("Failed to delete quote")
+          } else {
+            res.send("Successfully deleted quote")
+          }
+        })
+      } else {
+        res.send("Quote not found")
+      }
+    }
+  })
+}
 
 // Export All Function
 module.exports = {
     getAllQuotes,
     createNewQuotes,
     getQuoteById,
-    updateQuoteId
+    updateQuoteId,
+    deleteQuoteById
 }

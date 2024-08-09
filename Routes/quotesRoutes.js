@@ -14,7 +14,10 @@ router.post("/", quotesController.createNewQuotes);
 router.get("/:id", quotesController.getQuoteById);
 
 // Update Existing Quote by ID
-router.put("/", quotesController.updateQuoteId);
+router.put("/:id", quotesController.updateQuoteId);
+
+// Delete Quote by ID
+router.delete("/:id", quotesController.deleteQuoteById);
 
 // Export Router
 module.exports = router;

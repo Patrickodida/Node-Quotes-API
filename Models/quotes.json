@@ -1,11 +1,42 @@
 [
-    {"id": 1, "quote": "It is God who arms me with strength and keeps my way secure", "authorId": 1},
-    {"id": 2, "quote": "For God gave us a spirit not of fear buf for power and love and self control", "authorId": 2},
-    {"id": 3, "quote": "Love must be sincere. Hate what is evil; cling to what is good", "authorId": 3},
-    {"id": 4, "quote": "He gives power to the weak and strength to the powerless", "authorId": 4},
-    {"id": 5, "quote": "Submit to God and be at peace with him; in this way, prosperity will come to you", "authorId": 5},
-    {"id": 6, "quote": "Be strong and courageous. Do not be afraid; Do not be discouraged, for the lord your God will be with you wherever you go", "authorId": 6},
-    {"id": 7, "quote": "Regret for time wasted is wasting more time", "authorId": 7},
-    {"id": 8, "quote": "See this day i have set before you life and good, death and evil... I have set before you life and death, blessing and curse; Therefore choose life"},
-    {"id": 9, "quote": "Seeing death as the end of life is like seeing the horizon as the end of the ocean"}
+  {
+    "id": 1,
+    "quote": "It is God who arms me with strength and keeps my way secure",
+    "authorId": 1
+  },
+  {
+    "id": 2,
+    "quote": "For God gave us a spirit not of fear buf for power and love and self control",
+    "authorId": 2
+  },
+  {
+    "id": 3,
+    "quote": "Love must be sincere. Hate what is evil; cling to what is good",
+    "authorId": 3
+  },
+  {
+    "id": 4,
+    "quote": "He gives power to the weak and strength to the powerless",
+    "authorId": 4
+  },
+  {
+    "id": 5,
+    "quote": "Submit to God and be at peace with him; in this way, prosperity will come to you",
+    "authorId": 5
+  },
+  {
+    "id": 6,
+    "quote": "Be strong and courageous. Do not be afraid; Do not be discouraged, for the lord your God will be with you wherever you go",
+    "authorId": 6
+  },
+  {
+    "id": 7,
+    "quote": "Regret for time wasted is wasting more time",
+    "authorId": 7
+  },
+  {
+    "id": 8,
+    "quote": "See this day i have set before you life and good, death and evil... I have set before you life and death, blessing and curse; Therefore choose life",
+    "authorId": 8
+  }
 ]
