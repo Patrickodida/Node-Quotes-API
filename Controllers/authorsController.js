@@ -79,11 +79,35 @@ const updateAuthorById = (req, res)=>{
 }
 
 // Create a function to delete an author by ID
-
+const deleteAuthorById = (req, res)=>{
+    const { id } = req.params;
+    fs.readFile("./Models/authors.json", "utf8", (err, data)=>{
+        if(err){
+            res.send("Failed to get data")
+        } else {
+            let authors = JSON.parse(data);
+            const authorIndex = authors.findIndex(a => a.id == id);
+            if(authorIndex !== -1){
+                authors = authors.filter(a => a.id != id);
+                // Write updated data to the file
+                fs.writeFile("./Models/authors.json", JSON.stringify(authors, null, 2), (err)=>{
+                    if(err){
+                        res.send("Failed to delete author")
+                    } else {
+                        res.send("Successfully deleted author")
+                    }
+                })
+            } else {
+                res.send("Author not found")
+            }
+        }
+    })
+}
 // Export all the functions
 module.exports = {
     getAllAuthors,
     createNewAuthors,
     getAuthorById,
-    updateAuthorById
+    updateAuthorById,
+    deleteAuthorById
 }
