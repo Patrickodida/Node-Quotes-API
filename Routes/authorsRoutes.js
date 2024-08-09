@@ -13,5 +13,8 @@ router.post("/", authorsController.createNewAuthors);
 // Get Author by ID
 router.get("/:id", authorsController.getAuthorById);
 
+// Update Author by ID
+router.put("/:id", authorsController.updateAuthorById);
+
 // Export Router
 module.exports = router;

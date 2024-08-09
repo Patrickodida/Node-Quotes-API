@@ -53,6 +53,30 @@ const getAuthorById = (req, res)=>{
     })
 }
 // Create a function to update the existing author by ID
+const updateAuthorById = (req, res)=>{
+    const { id } = req.params;
+    fs.readFile("./Models/authors.json", "utf8", (err, data)=>{
+        if(err){
+            res.send("Failed to get data")
+        } else {
+            const authors = JSON.parse(data);
+            const authorIndex = authors.findIndex(a => a.id == id);
+            if(authorIndex !== -1){
+                authors[authorIndex] = { ...authors[authorIndex], ...req.body}
+                // Write updated data to the file
+                fs.writeFile("./Models/authors.json", JSON.stringify(authors, null, 2), (err)=>{
+                    if(err){
+                        res.send("Failed to update author")
+                    } else {
+                        res.json(authors[authorIndex])
+                    }
+                })
+            } else {
+                res.send("Author not found")
+            }
+        }
+    })
+}
 
 // Create a function to delete an author by ID
 
@@ -60,5 +84,6 @@ const getAuthorById = (req, res)=>{
 module.exports = {
     getAllAuthors,
     createNewAuthors,
-    getAuthorById
+    getAuthorById,
+    updateAuthorById
 }
