@@ -36,23 +36,27 @@ const createNewAuthors = async (req, res) => {
   }
 };
 
-// Create a function to retrieve a specific author by ID
-const getAuthorById = (req, res) => {
+// Function to retrieve a specific author by ID
+const getAuthorById = async (req, res) => {
   const { id } = req.params;
-  fs.readFile("./Models/authors.json", "utf8", (err, data) => {
-    if (err) {
-      res.send("Failed to get author");
+  try{
+    const author = await Prisma.author.findUnique({
+        where: {
+            id: parseInt(id)
+        }
+    })
+    if(author){
+        res.status(200).json(author);
     } else {
-      const authors = JSON.parse(data);
-      const author = authors.find((a) => a.id == id);
-      if (author) {
-        res.json(author);
-      } else {
-        res.send("Author not found");
-      }
+        res.status(404).send("Author not found")
     }
-  });
+  }catch(error){
+    const error500 = 'SERVER_ERROR';
+    console.error(error)
+    res.status(500).send(`${error500}: Failed to retrieve a specific author by ID`)
+  }
 };
+
 // Create a function to update the existing author by ID
 const updateAuthorById = (req, res) => {
   const { id } = req.params;
