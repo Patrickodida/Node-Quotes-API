@@ -1,16 +1,20 @@
 // Import Files System
 const fs = require("node:fs");
+// Import Prisma Client
+const { PrismaClient } = require('@prisma/client');
+
+const Prisma = new PrismaClient();
 
 // create a function to get all Quotes
-const getAllQuotes = (req, res) => {
-  // Get Info from the file
-  fs.readFile("./Models/quotes.json", "utf8", (err, data) => {
-    if (err) {
-      res.send("Failed to get quotes");
-    } else {
-      res.json(JSON.parse(data));
-    }
-  });
+const getAllQuotes = async (req, res) => {
+  try{
+    const quotes = await Prisma.quote.findMany();
+    res.status(200).json(quotes);
+  }catch(error){
+    const error500 = "INTERNAL_SERVER_ERROR";
+    console.error(error)
+    res.status(500).send(`${error500}: Failed to get all users`)
+  }
 };
 
 // create a function to post quotes

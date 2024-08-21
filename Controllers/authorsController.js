@@ -13,7 +13,7 @@ const getAllAuthors = async (req, res) => {
   } catch (error) {
     const error500 = "INTERNAL_SERVER_ERROR";
     console.error(error);
-    res.status(500).send(`${error500}: Faile to get all authors`);
+    res.status(500).send(`${error500}: Failed to get all authors`);
   }
 };
 
