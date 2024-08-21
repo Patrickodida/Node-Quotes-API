@@ -39,52 +39,52 @@ const createNewAuthors = async (req, res) => {
 // Function to retrieve a specific author by ID
 const getAuthorById = async (req, res) => {
   const { id } = req.params;
-  try{
+  try {
     const author = await Prisma.author.findUnique({
-        where: {
-            id: parseInt(id)
-        }
-    })
-    if(author){
-        res.status(200).json(author);
+      where: {
+        id: parseInt(id),
+      },
+    });
+    if (author) {
+      res.status(200).json(author);
     } else {
-        res.status(404).send("Author not found")
+      res.status(404).send("Author not found");
     }
-  }catch(error){
-    const error500 = 'SERVER_ERROR';
-    console.error(error)
-    res.status(500).send(`${error500}: Failed to retrieve a specific author by ID`)
+  } catch (error) {
+    const error500 = "SERVER_ERROR";
+    console.error(error);
+    res
+      .status(500)
+      .send(`${error500}: Failed to retrieve a specific author by ID`);
   }
 };
 
-// Create a function to update the existing author by ID
-const updateAuthorById = (req, res) => {
+// Function to update the existing author by ID
+const updateAuthorById = async (req, res) => {
   const { id } = req.params;
-  fs.readFile("./Models/authors.json", "utf8", (err, data) => {
-    if (err) {
-      res.send("Failed to get data");
+  try {
+    const { name, picture } = req.body;
+    const author = await Prisma.author.update({
+      where: {
+        id: parseInt(id),
+      },
+      data: {
+        name: name,
+        picture: picture,
+      },
+    });
+    if (author) {
+      res.status(200).json(author);
     } else {
-      const authors = JSON.parse(data);
-      const authorIndex = authors.findIndex((a) => a.id == id);
-      if (authorIndex !== -1) {
-        authors[authorIndex] = { ...authors[authorIndex], ...req.body };
-        // Write updated data to the file
-        fs.writeFile(
-          "./Models/authors.json",
-          JSON.stringify(authors, null, 2),
-          (err) => {
-            if (err) {
-              res.send("Failed to update author");
-            } else {
-              res.json(authors[authorIndex]);
-            }
-          }
-        );
-      } else {
-        res.send("Author not found");
-      }
+      res.status(404).send("Author not found");
     }
-  });
+  } catch (error) {
+    const error500 = "SERVER_ERROR";
+    console.error(error);
+    res
+      .status(500)
+      .send(`${error500}: Failed to update a specific author by ID`);
+  }
 };
 
 // Create a function to delete an author by ID
