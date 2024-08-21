@@ -1,21 +1,25 @@
 // Import the FS
 const fs = require("node:fs");
+// Import Prisma Client
+const { PrismaClient } = require('@prisma/client');
 
-// Create a function to get all authors
-const getAllAuthors = (req, res)=>{
-    // Get Info from the file
-    fs.readFile("./Models/authors.json", "utf8", (err, data)=>{
-        if(err){
-            res.send("Failed to get Data")
-        } else {
-            res.json(JSON.parse(data))
-        }
-    })
+const Prisma = new PrismaClient();
+
+// Function to get all authors
+const getAllAuthors = async (req, res)=>{
+    try{
+       const authors =  await Prisma.author.findMany();
+       res.status(200).json(authors);
+    }catch(error){
+        const error500 = 'INTERNAL_SERVER_ERROR';
+        console.error(error)
+        res.status(500).send(`${error500}: Faile to get all authors`);
+    }
 }
 
 // Create a function to post new authors
 const createNewAuthors = (req, res)=>{
-    // Get the request object with data to saved in the authors.json file
+    
     fs.readFile("./Models/authors.json", (err, data)=>{
         if(err){
             res.send("Failed to get data")
@@ -23,7 +27,7 @@ const createNewAuthors = (req, res)=>{
             const authors = JSON.parse(data);
             const newAuthor = req.body;
             authors.push(newAuthor);
-            // Write data to the File
+            
             fs.writeFile("./Models/authors.json", JSON.stringify([...JSON.parse(data), req.body], null, 2), (err)=>{
                 if(err){
                     res.send("Failed to save new author")
