@@ -60,34 +60,31 @@ const getQuoteById = async (req, res) => {
 };
 
 // Create a function to update an existing quote by ID
-const updateQuoteId = (req, res) => {
+const updateQuoteId = async (req, res) => {
   const { id } = req.params;
-  const { quote, authorId } = req.body;
-  fs.readFile("./Models/quotes.json", "utf8", (err, data) => {
-    if (err) {
-      res.send("Failed to get data");
+  try {
+    const { text, category } = req.body;
+    const quote = await Prisma.quote.update({
+      where: {
+        id: parseInt(id),
+      },
+      data: {
+        text: text,
+        category: category,
+      },
+    });
+    if (quote) {
+      res.status(200).json(quote);
     } else {
-      const quotes = JSON.parse(data);
-      const index = quotes.findIndex((q) => q.id === id);
-      if (index !== -1) {
-        // Update the quote
-        quotes[index] = { id, quote, authorId };
-        fs.writeFile(
-          "./Models/quotes.json",
-          JSON.stringify(quote, null, 2),
-          (err) => {
-            if (err) {
-              res.send("Failed to update quote");
-            } else {
-              res.send("Successfully updated quote");
-            }
-          }
-        );
-      } else {
-        res.send("Quote not found");
-      }
+      res.status(404).send("Quote not found");
     }
-  });
+  } catch (error) {
+    const error500 = "SERVER_ERROR";
+    console.error(error);
+    res
+      .status(500)
+      .send(`${error500}: Failed to update a specific author by ID`);
+  }
 };
 
 // Create a function to delete a quote by ID
