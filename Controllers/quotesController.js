@@ -88,33 +88,20 @@ const updateQuoteId = async (req, res) => {
 };
 
 // Create a function to delete a quote by ID
-const deleteQuoteById = (req, res) => {
+const deleteQuoteById = async (req, res) => {
   const { id } = req.params;
-  fs.readFile("./Models/quotes.json", "utf8", (err, data) => {
-    if (err) {
-      res.send("Failed to get data");
-    } else {
-      let quotes = JSON.parse(data);
-      const quoteIndex = quotes.findIndex((q) => q.id == id);
-      if (quoteIndex !== -1) {
-        quotes = quotes.filter((q) => q.id != id);
-        // Write updated data to the file
-        fs.writeFile(
-          "./Models/quotes.json",
-          JSON.stringify(quotes, null, 2),
-          (err) => {
-            if (err) {
-              res.send("Failed to delete quote");
-            } else {
-              res.send("Successfully deleted quote");
-            }
-          }
-        );
-      } else {
-        res.send("Quote not found");
+  try{
+    const quote = await Prisma.quote.delete({
+      where: {
+        id: parseInt(id)
       }
-    }
-  });
+    })
+    res.status(200).json(quote);
+  }catch(error){
+    const error500 = 'SERVER_ERROR';
+    console.error(error)
+    res.status(500).send("Failed to delete quote by ID")
+  }
 };
 
 // Export All Function
