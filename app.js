@@ -1,6 +1,7 @@
 // Import Libraries
 const express = require("express");
 const fs = require("node:fs");
+const cors = require('cors');
 const path = require("node:path");
 const authorRouter = require("./Routes/authorsRoutes");
 const quoteRouter = require("./Routes/quotesRoutes");
@@ -38,6 +39,16 @@ app.use((req, res, next) => {
 
 // Middle to parse JSON bodies
 app.use(express.json());
+
+// Define CORS Options
+const corsOptions = {
+  origin: ["http://localhost:3000"],
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}
+
+// Enable CORS
+app.use(cors(corsOptions));
 
 app.use("/authors", authorRouter);
 
