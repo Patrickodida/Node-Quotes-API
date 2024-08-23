@@ -3,12 +3,14 @@ const express = require('express');
 const router = express.Router();
 const fs = require('node:fs');
 const quotesController = require('../Controllers/quotesController');
+const validator = require('../Utils/joi.validator');
+const {quoteSchema} = require('../Utils/joi.schemas');
 
 // Get Quotes
 router.get("/", quotesController.getAllQuotes);
 
 // Post New Quotes
-router.post("/", quotesController.createNewQuotes);
+router.post("/", validator(quoteSchema), quotesController.createNewQuotes);
 
 // Get Quote by ID
 router.get("/:id", quotesController.getQuoteById);
