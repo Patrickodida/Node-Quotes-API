@@ -8,7 +8,7 @@ const Prisma = new PrismaClient();
 // Function to Get User
 const getUsers = async(req, res)=>{
     const users = await Prisma.user.findMany();
-    res.status(200).json(users);
+    res.status(StatusCodes.OK).json(users);
 }
 
 // Function to Login User
@@ -29,13 +29,13 @@ const loginUsers = async(req,res)=>{
                     {expiresIn: "1h"}
                 )
                 // Send the token as a response
-                res.status(200).json({ token, message: "Login successful" });
+                res.status(StatusCodes.OK).json({ token, message: "Login successful" });
             } else {
-                res.status(403).json({error: "password was incorrect"});
+                res.status(StatusCodes.FORBIDDEN).json({error: "password was incorrect"});
             }
-            res.status(200).json();
+            res.status(StatusCodes.OK).json();
         } else {
-            res.status(404).json({error:"user was not found"});
+            res.status(StatusCodes.NOT_FOUND).json({error:"user was not found"});
         }
     }
 

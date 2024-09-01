@@ -2,6 +2,8 @@
 const fs = require("node:fs");
 // Import Prisma Client
 const { PrismaClient } = require("@prisma/client");
+// Import StatusCodes
+const { StatusCodes } = require('http-status-codes');
 
 const Prisma = new PrismaClient();
 
@@ -9,11 +11,10 @@ const Prisma = new PrismaClient();
 const getAllQuotes = async (req, res) => {
   try {
     const quotes = await Prisma.quote.findMany();
-    res.status(200).json(quotes);
+    res.status(StatusCodes.OK).json(quotes);
   } catch (error) {
-    const error500 = "INTERNAL_SERVER_ERROR";
     console.error(error);
-    res.status(500).send(`${error500}: Failed to get all users`);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Failed to get all users');
   }
 };
 
@@ -28,11 +29,10 @@ const createNewQuotes = async (req, res) => {
         category: category,
       },
     });
-    res.status(200).json(newQuote);
+    res.status(StatusCodes.OK).json(newQuote);
   } catch (error) {
-    const error500 = "SERVER_ERROR";
     console.error(error);
-    res.status(500).send(`${error500}: Failed to create new quote`);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Failed to create new quote');
   }
 };
 
@@ -46,16 +46,15 @@ const getQuoteById = async (req, res) => {
       },
     });
     if (quote) {
-      res.status(200).json(quote);
+      res.status(StatusCodes.OK).json(quote);
     } else {
-      res.status(404).send("Quote not found");
+      res.status(StatusCodes.NOT_FOUND).send("Quote not found");
     }
   } catch (error) {
-    const error500 = "SERVER_ERROR";
     console.error(error);
     res
-      .status(500)
-      .send(`${error500}: Failed to retrieve a specific quote by ID`);
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send('Failed to retrieve a specific quote by ID');
   }
 };
 
@@ -74,16 +73,15 @@ const updateQuoteId = async (req, res) => {
       },
     });
     if (quote) {
-      res.status(200).json(quote);
+      res.status(StatusCodes.OK).json(quote);
     } else {
-      res.status(404).send("Quote not found");
+      res.status(StatusCodes.NOT_FOUND).send("Quote not found");
     }
   } catch (error) {
-    const error500 = "SERVER_ERROR";
     console.error(error);
     res
-      .status(500)
-      .send(`${error500}: Failed to update a specific author by ID`);
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send('Failed to update a specific author by ID');
   }
 };
 
@@ -96,11 +94,10 @@ const deleteQuoteById = async (req, res) => {
         id: parseInt(id)
       }
     })
-    res.status(200).json(quote);
+    res.status(StatusCodes.OK).json(quote);
   }catch(error){
-    const error500 = 'SERVER_ERROR';
     console.error(error)
-    res.status(500).send("Failed to delete quote by ID")
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Failed to delete quote by ID')
   }
 };
 

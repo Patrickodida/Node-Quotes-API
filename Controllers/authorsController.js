@@ -2,6 +2,8 @@
 const fs = require("node:fs");
 // Import Prisma Client
 const { PrismaClient } = require("@prisma/client");
+// Import StatusCodes
+const { StatusCodes } =require('http-status-codes');
 
 const Prisma = new PrismaClient();
 
@@ -9,11 +11,10 @@ const Prisma = new PrismaClient();
 const getAllAuthors = async (req, res) => {
   try {
     const authors = await Prisma.author.findMany();
-    res.status(200).json(authors);
+    res.status(StatusCodes.OK).json(authors);
   } catch (error) {
-    const error500 = "INTERNAL_SERVER_ERROR";
     console.error(error);
-    res.status(500).send(`${error500}: Failed to get all authors`);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Failed to get all authors');
   }
 };
 
@@ -28,11 +29,10 @@ const createNewAuthors = async (req, res) => {
         picture,
       },
     });
-    res.status(200).send(newAuthor);
+    res.status(StatusCodes.OK).send(newAuthor);
   } catch (error) {
-    const error500 = "SERVER_ERROR";
     console.error(error);
-    res.status(500).send(`${error500}: Failed to create new author`);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Failed to create new author');
   }
 };
 
@@ -46,16 +46,15 @@ const getAuthorById = async (req, res) => {
       },
     });
     if (author) {
-      res.status(200).json(author);
+      res.status(StatusCodes.OK).json(author);
     } else {
-      res.status(404).send("Author not found");
+      res.status(StatusCodes.NOT_FOUND).send("Author not found");
     }
   } catch (error) {
-    const error500 = "SERVER_ERROR";
     console.error(error);
     res
-      .status(500)
-      .send(`${error500}: Failed to retrieve a specific author by ID`);
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send('Failed to retrieve a specific author by ID');
   }
 };
 
@@ -74,16 +73,15 @@ const updateAuthorById = async (req, res) => {
       },
     });
     if (author) {
-      res.status(200).json(author);
+      res.status(StatusCodes.OK).json(author);
     } else {
-      res.status(404).send("Author not found");
+      res.status(StatusCodes.NOT_FOUND).send("Author not found");
     }
   } catch (error) {
-    const error500 = "SERVER_ERROR";
     console.error(error);
     res
-      .status(500)
-      .send(`${error500}: Failed to update a specific author by ID`);
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send('Failed to update a specific author by ID');
   }
 };
 
@@ -96,11 +94,10 @@ const deleteAuthorById = async (req, res) => {
             id: parseInt(id)
         }
     })
-        res.status(200).json(author);
+        res.status(StatusCodes.OK).json(author);
   }catch(error){
-    const error500 = "SERVER_ERROR";
     console.error(error)
-    res.status(500).send(`${error500}: Failed to delete a specific author by ID`)
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Failed to delete a specific author by ID')
   }
 };
 
