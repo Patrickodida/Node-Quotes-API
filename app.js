@@ -5,6 +5,7 @@ const cors = require('cors');
 const path = require("node:path");
 const authorRouter = require("./Routes/authorsRoutes");
 const quoteRouter = require("./Routes/quotesRoutes");
+const userRouter = require("./Routes/usersRouter");
 
 const app = express();
 
@@ -53,6 +54,8 @@ app.use(cors(corsOptions));
 app.use("/authors", authorRouter);
 
 app.use("/quotes", quoteRouter);
+
+app.use("/users", userRouter);
 
 // Set request handlers based on the API endpoints
 app.get("/", (req, res) => {
