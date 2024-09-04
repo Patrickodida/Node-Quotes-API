@@ -15,7 +15,7 @@ const validateToken = (req, res, next)=>{
             }
         })
     } else {
-        res.status(StatusCodes.NOT_FOUND).json(`auth header is missing`)
+        res.status(StatusCodes.BAD_REQUEST).json(`Authorization Header with Access Token is missing`)
     }
 }
 

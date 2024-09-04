@@ -14,7 +14,7 @@ const getAllAuthors = async (req, res) => {
     res.status(StatusCodes.OK).json(authors);
   } catch (error) {
     console.error(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Failed to get all authors');
+    res.status(StatusCodes.BAD_REQUEST).send('Failed to get all authors');
   }
 };
 
