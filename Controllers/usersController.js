@@ -14,7 +14,7 @@ const getUsers = async(req, res)=>{
 
 // Function to register the user(Hash Password)
 const createUser = async(req, res)=>{
-    const { username, password, email } = req.body;
+    const { username, password, email, role } = req.body;
     try{
         // check if the user already exists
         const existingUser = await Prisma.user.findUnique({
@@ -32,7 +32,8 @@ const createUser = async(req, res)=>{
             data: {
                 username,
                 password: hashedPassword,
-                email
+                email,
+                role
             }
         });
         res.status(StatusCodes.CREATED).json({message: "user created successfully",user: newUser});

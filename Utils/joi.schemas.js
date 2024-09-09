@@ -1,5 +1,12 @@
 const Joi = require('joi');
 
+// User Schema
+const userSchema = Joi.object({
+    username: Joi.string().min(3).max(10).required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().min(5).max(10).required()
+});
+
 // Author Schema
 const authorSchema = Joi.object({
     id: Joi.number().integer().required(),
@@ -15,6 +22,7 @@ const quoteSchema = Joi.object({
 })
 
 module.exports = {
+    userSchema,
     authorSchema,
     quoteSchema
 };
