@@ -58,17 +58,6 @@ app.use("/quotes", quoteRouter);
 
 app.use("/users", userRouter);
 
-// Catch errors for all Undefined Routes (404 Error Handling)
-app.use((req, res, next) => {
-    res.status(StatusCodes.NOT_FOUND).json({ error: "Route not found" });
-});
-
-// General Error Handling Middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Something went wrong" });
-});
-
 // Set request handlers based on the API endpoints
 app.get("/", (req, res) => {
   res.send(`<h1 style="color: blue">Welcome to my quote API</h1>`);

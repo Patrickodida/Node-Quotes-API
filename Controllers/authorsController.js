@@ -29,7 +29,7 @@ const createNewAuthors = async (req, res) => {
         picture,
       },
     });
-    res.status(StatusCodes.OK).send(newAuthor);
+    res.status(StatusCodes.CREATED).json(newAuthor);
   } catch (error) {
     console.error(error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Failed to create new author');
@@ -53,8 +53,8 @@ const getAuthorById = async (req, res) => {
   } catch (error) {
     console.error(error);
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send('Failed to retrieve a specific author by ID');
+      .status(StatusCodes.BAD_REQUEST)
+      .send('Invalid author ID format');
   }
 };
 
