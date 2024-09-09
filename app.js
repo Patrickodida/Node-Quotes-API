@@ -6,6 +6,7 @@ const path = require("node:path");
 const authorRouter = require("./Routes/authorsRoutes");
 const quoteRouter = require("./Routes/quotesRoutes");
 const userRouter = require("./Routes/usersRouter");
+const { StatusCodes } =require('http-status-codes');
 
 const app = express();
 
@@ -56,6 +57,17 @@ app.use("/authors", authorRouter);
 app.use("/quotes", quoteRouter);
 
 app.use("/users", userRouter);
+
+// Catch errors for all Undefined Routes (404 Error Handling)
+app.use((req, res, next) => {
+    res.status(StatusCodes.NOT_FOUND).json({ error: "Route not found" });
+});
+
+// General Error Handling Middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Something went wrong" });
+});
 
 // Set request handlers based on the API endpoints
 app.get("/", (req, res) => {
