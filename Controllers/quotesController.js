@@ -9,8 +9,14 @@ const Prisma = new PrismaClient();
 
 // create a function to get all Quotes
 const getAllQuotes = async (req, res) => {
+  console.log(req.query);
   try {
-    const quotes = await Prisma.quote.findMany();
+    // Check if the 'results' query parameter exists and is a valid number
+    const limit = req.query.results ? parseInt(req.query.results) : undefined;
+    const quotes = await Prisma.quote.findMany({
+      // Apply limit only if it is defined
+      take: limit
+    });
     res.status(StatusCodes.OK).json(quotes);
   } catch (error) {
     console.error(error);

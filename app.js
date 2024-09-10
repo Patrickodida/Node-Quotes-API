@@ -52,14 +52,14 @@ const corsOptions = {
 // Enable CORS
 app.use(cors(corsOptions));
 
-app.use("/authors", authorRouter);
+app.use("/api/v1/authors", authorRouter);
 
-app.use("/quotes", quoteRouter);
+app.use("/api/v1/quotes", quoteRouter);
 
-app.use("/users", userRouter);
+app.use("/api/v1/users", userRouter);
 
 // Set request handlers based on the API endpoints
-app.get("/", (req, res) => {
+app.get("/api/v1/", (req, res) => {
   res.send(`<h1 style="color: blue">Welcome to my quote API</h1>`);
 });
 

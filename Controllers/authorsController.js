@@ -9,8 +9,14 @@ const Prisma = new PrismaClient();
 
 // Function to get all authors
 const getAllAuthors = async (req, res) => {
+  console.log(req.query);
   try {
-    const authors = await Prisma.author.findMany();
+    // Check if the 'results' query parameter exists and is a valid number
+    const limit = req.query.results ? parseInt(req.query.results) : undefined;
+    const authors = await Prisma.author.findMany({
+      // Apply limit only if it is defined
+      take: limit
+    });
     res.status(StatusCodes.OK).json(authors);
   } catch (error) {
     console.error(error);
