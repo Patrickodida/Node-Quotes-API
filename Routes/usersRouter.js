@@ -6,7 +6,7 @@ const {userSchema} = require('../Utils/joi.schemas.js')
 const router = express.Router();
 
 // Get User
-router.get('/', validateToken, getUsers)
+router.get('/', getUsers)
 // Register User
 router.post('/register', validateRequest(userSchema), createUser)
 // Post user
