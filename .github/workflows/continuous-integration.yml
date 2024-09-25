@@ -1,0 +1,24 @@
+name: Continuous-Integration
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+jobs:
+  testing_api:
+    runs-on: ubuntu_latest
+    steps:
+      - name: clone repo code into the runner
+        uses: actions/checkout@v2
+
+      - name: setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run the Unit/Integration
+        run: npm test
