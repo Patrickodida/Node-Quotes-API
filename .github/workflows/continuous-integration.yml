@@ -5,9 +5,27 @@ on:
     branches: [main]
   push:
     branches: [main]
+
+env:
+  DATABASE_URL: postgresql://postgres:Elon2022!@localhost:5432/authors-quotes-api-db?schema=public
+
 jobs:
   testing_api:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: Elon2022!
+          POSTGRES_DB: authors-quotes-api-db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: clone repo code into the runner
         uses: actions/checkout@v2
